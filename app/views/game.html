@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="/static/styles/vendor/bootstrap.min.css">
+</head>
+<body>
+	<div class='container-fluid'>
+		<div class='row'>
+			<div class='col-lg-4 mt-5' style="margin-left: auto;margin-right: auto;text-align: center;">
+				<table border='1' width="400" height="400">
+					<thead></thead>
+					<tbody>
+						{% for row in session['game']['board'] %}
+						<tr>
+							{% for cell in row %}
+								<td height="30" width="30">{{cell}}</td>
+							{% endfor %}
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% if not winner %}
+					{% if session['game']['turn'] == 1 %}
+					<h3>{{session['player1']}}'s Turn</h3>
+					{% else %}
+					<h3>{{session['player2']}}'s Turn</h3>
+					{% endif %}
+					<div class='card bg-dark fg-white'>
+						<div class='card-body'>
+							<form action='/place_move' method='post'>
+								<div class='form-inline'>
+									<input class='form-control form-control-md' type="text" name="move" style="margin-left: 35px;margin-right: 5px;">
+									<input class='btn btn-success'type="submit" value="Place Token">
+								</div>
+							</form>
+						</div>
+					</div>
+				{% else %}
+					{{ winner }}
+					<div class='card bg-dark fg-white'>
+						<div class='card-body'>
+							<a class='btn btn-danger' href="/">Main Page</a>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</body>
+</html>
